@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.8.0.xsd">
+
+	<context:annotation-config />
+	<aop:aspectj-autoproxy />
+	<context:component-scan base-package="com.pay.*">
+		<context:include-filter type="annotation"
+			expression="org.aspectj.lang.annotation.Aspect" />
+	</context:component-scan>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/caiyunpay"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="root"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/pay/model/TbPay.hbm.xml</value>
+				<value>com/pay/model/TbTctype.hbm.xml</value>
+				<value>com/pay/model/TbTcdetail.hbm.xml</value>
+				<value>com/pay/model/TbWebpPay.hbm.xml</value>
+				<value>com/pay/model/TbOperate.hbm.xml</value>
+				<value>com/pay/model/TbWxpay.hbm.xml</value>
+				<value>com/pay/model/TbTickets.hbm.xml</value>
+				<value>com/pay/model/TbPhoneTicket.hbm.xml</value>
+				<value>com/pay/model/TbPhoneFlow.hbm.xml</value>
+				<value>com/pay/model/TbPvuv.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="TbPayDAO" class="com.pay.dao.TbPayDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TbTctypeDAO" class="com.pay.dao.TbTctypeDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TbTcdetailDAO" class="com.pay.dao.TbTcdetailDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TbWebpPayDAO" class="com.pay.dao.TbWebpPayDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	 <bean id="TbOperateDAO" class="com.pay.dao.TbOperateDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    <bean id="TbWxpayDAO" class="com.pay.dao.TbWxpayDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    <bean id="TbTicketsDAO" class="com.pay.dao.TbTicketsDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    <bean id="TbPhoneTicketDAO" class="com.pay.dao.TbPhoneTicketDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    <bean id="TbPhoneFlowDAO" class="com.pay.dao.TbPhoneFlowDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    <bean id="TbPvuvDAO" class="com.pay.dao.TbPvuvDAO">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+    
+    <!-- ===================================  配置Memcached =============================== -->  
+    <!-- 开启缓存 -->    
+	<bean id="memcachedPool" class="com.danga.MemCached.SockIOPool" 
+	factory-method="getInstance" init-method="initialize">
+	<constructor-arg>
+	<value>neeaMemcachedPool</value>
+	</constructor-arg>
+	<property name="servers">
+	<list>
+	<value>127.0.0.1:11210</value>
+	</list>
+	</property>
+	<property name="initConn">
+	<value>20</value>
+	</property>
+	<property name="minConn">
+	<value>10</value>
+	</property>
+	<property name="maxConn">
+	<value>5000</value>
+	</property>
+	<property name="nagle">
+	<value>false</value>
+	</property>
+	<property name="socketTO">
+	<value>3000</value>
+	</property>
+	</bean>
+	<bean id="memcachedClient" class="com.danga.MemCached.MemCachedClient">
+	<constructor-arg>
+	<value>neeaMemcachedPool</value>
+	</constructor-arg>
+	</bean>
+	
+    <!-- ===================================  配置Activemq =============================== -->  
+	<!-- Activemq 连接工厂 -->
+	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<constructor-arg value="system1" />
+		<constructor-arg value="manager1" />
+		<constructor-arg value="failover:(tcp://127.0.0.1:61616)?timeout=2000" />
+	</bean>
+
+	<!-- ConnectionFactory Definition -->
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.CachingConnectionFactory">
+		<constructor-arg ref="activeMQConnectionFactory" />
+	</bean>
+
+	<!-- Default Destination Queue Definition -->
+	<!-- 测试配置多个Destination -->
+	<bean id="destination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg index="0" value="hecaiyun.activemq.queue" />
+	</bean>
+
+	<!-- JmsTemplate Definition -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestination" ref="destination" />
+	</bean>
+
+	<!--Flow Message Sender  -->
+	<bean id="waxCaiYunFlowSend" class="com.pay.service.WaxCaiYunFlowSend">
+	</bean>
+
+	<!-- Message Sender Definition -->
+	<bean id="messageSender" class="com.pay.activemq.MessageSender">
+		<constructor-arg index="0" ref="jmsTemplate" />
+		<constructor-arg index="1" ref="destination" />
+	</bean>
+	
+	<!-- 消息监听器 Message Receiver Definition -->
+	<bean id="messageReceiver" class="com.pay.activemq.MessageReceiver">
+	</bean>
+	<bean class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destinationName" value="hecaiyun.activemq.queue" />
+		<property name="messageListener" ref="messageReceiver" />
+	</bean>
+
+	<!-- 定时任务-->
+    <bean id="quartzJob" class="com.pay.quartz.QuartzJob"></bean>
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="jobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject">
+            <ref bean="quartzJob"/>
+        </property>
+        <!-- 调用类中的方法 -->
+        <property name="targetMethod">
+            <value>work</value>
+        </property>
+    </bean>
+    <!-- 定义触发时间 -->
+    <bean id="doTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="jobtask"/>
+        </property>
+        <!-- cron表达式 -->
+        <property name="cronExpression" value="0 30 9 * * ?"/>
+    </bean>
+    <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  -->
+    <bean id="startQuertz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="doTime"/>
+            </list>
+        </property>
+    </bean>
+</beans>

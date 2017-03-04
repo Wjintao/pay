@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="default" extends="struts-default" namespace="/pay">
+		<!-- 设置默认的ACTION ，此必须放在一个包中的第一行 -->
+		<default-action-ref name="default"></default-action-ref>
+		<action name="default">
+			<result>/index.jsp</result>
+		</action>
+		<!-- 页面等跳转接口 -->
+		<!-- <action name="order" class="com.pay.action.PageAction" method="order">
+			<result name="success">/pay/expan.jsp</result>
+			<result name="error">/pay/error.jsp</result>
+		</action> -->
+		<action name="order" class="com.pay.action.PageAction" method="order">
+			<result name="success">/wap/main.jsp</result>
+			<result name="error">/wap/error.jsp</result>
+		</action>
+		<action name="introduce" class="com.pay.action.PageAction" method="introduce">
+			<result name="success">/pay/introduce.jsp</result>
+		</action>
+		<action name="introcsl" class="com.pay.action.PageAction" method="introcsl">
+			<result name="success">/pay/introcsl.jsp</result>
+		</action>
+		<action name="tosure" class="com.pay.action.PageAction" method="toSure">
+			<result name="webpay">/web/pay.jsp</result>
+			<result name="wappay">/wap/pay.jsp</result>
+			<result name="error">/web/error.jsp</result>
+		</action>
+		<action name="toweb" class="com.pay.action.PageAction" method="toWeb">
+			<result name="success">/web/main.jsp</result>
+			<result name="error">/web/error.jsp</result>
+		</action>
+		<action name="towap" class="com.pay.action.PageAction" method="toWap">
+			<result name="success">/wap/main.jsp</result>
+			<result name="error">/wap/error.jsp</result>
+		</action>
+		<action name="toWapXiChe" class="com.pay.action.PageAction" method="toWapXiChe">
+			<result name="wapmain">/wap/main.jsp</result>
+			<result name="waptuiding">/wap/unpurchase.jsp</result>
+			<result name="waphuiyuan">/wap/huiyuan.jsp</result>
+			<result name="error">/wap/error.jsp</result>
+		</action>
+		<action name="toMarketPageWap" class="com.pay.action.PageAction" method="toMarketPageWap">
+			<result name="success">/wap/marketkjkr.jsp</result>
+			<result name="jiangsu">/wap/marketkjkrjs.jsp</result>
+			<result name="error">/wap/error.jsp</result>
+		</action>
+		<action name="toMarketPageWeb" class="com.pay.action.PageAction" method="toMarketPageWeb">
+			<result name="success">/web/marketkjkr.jsp</result>
+			<result name="jiangsu">/web/marketkjkrjs.jsp</result>
+			<result name="error">/web/error.jsp</result>
+		</action>
+		<action name="toMarketPageWxc" class="com.pay.action.PageAction" method="toMarketPageWxc">
+			<result name="success">/wap/markethy.jsp</result>
+			<result name="error">/wap/error.jsp</result>
+		</action>
+		<action name="getHfllcx" class="com.pay.action.PageAction" method="getHfllcx"></action>
+		<action name="getTcDetail" class="com.pay.action.PayAction" method="getTcDetail"></action>
+		<action name="getOperate" class="com.pay.action.PayAction" method="getOperate"></action>
+		
+		<!-- 微信支付接口 -->
+		<action name="prepay" class="com.pay.action.PayAction" method="prepay"></action>
+		<action name="surePay" class="com.pay.action.PayAction" method="surePay"></action>
+		<action name="notifyCallback" class="com.pay.action.NotifyAction" method="notifyCallback"></action>
+		<action name="notifyWxCallback" class="com.pay.action.NotifyWxAction" method="notifyWxCallback">
+			<!--<result name="success">/pay/expan.jsp</result>  -->
+		</action>
+		<action name="qrcodeCallback" class="com.pay.action.QrcodeAction" method="qrcodeCallback"></action>
+		
+		<!-- wabp跳转，订单确认，订单同步接口 -->
+		<action name="getWabpPayUrl" class="com.pay.action.Pay4WabpAction" method="getWabpPayUrl"></action>
+		<action name="confirm" class="com.pay.action.Notify4WabpAction" method="confirm"></action>
+		<action name="synchro" class="com.pay.action.Notify4WabpAction" method="synchro"></action>
+		<!-- wabp支付退订相关接口 -->
+		<action name="toUnpurchase" class="com.pay.action.PageAction" method="toUnpurchase"></action>
+		<action name="getUnPurchase" class="com.pay.action.CloseOrderAction" method="getUnPurchase"></action>
+		<action name="unPurchase" class="com.pay.action.CloseOrderAction" method="unPurchase"></action>		
+		<!-- 电影券活动接口 -->
+		<action name="getTicket" class="com.pay.action.NoticeAction" method="getTicket"></action>	
+		<!-- 流量赠送相关接口 -->
+		<action name="checkUFO" class="com.pay.action.NoticeAction" method="checkUFO"></action>	
+		<!-- 彩心灵跳转相关接口 -->
+		<action name="toCXL" class="com.pay.action.CxlTransmitAction" method="toCXL">
+			<result name="success">/wap/paycxl.jsp</result>
+		</action>		
+	</package>
+</struts>    

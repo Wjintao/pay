@@ -1,0 +1,264 @@
+/*layout*/
+body {
+  min-width: 320px;
+  max-width:750px;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1.428;
+  color: #333;
+  font-family: "Microsoft Yahei","微软雅黑","Helvetica Neue",Helvetica,Tahoma,sans-serif; 
+}
+[type="text"], [type="password"], select {
+  width: 100%;
+  padding: 0 2px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #ddd;
+  border-radius: 4px; 
+}
+textarea {
+  width: 100%;
+  padding: 5px;
+  height: 80px;
+  border: none;
+  border-radius: 4px; 
+}
+.fix-bg{
+  min-height: 100vh;
+  padding-bottom: 120px;
+  background:url(../images/bg_02.png) no-repeat center bottom #7aa7ff;
+  background-size: 100% auto;
+  position: relative;
+}
+
+section {
+  padding-bottom: 60px; 
+}
+.gray-bg{
+  background-color: #efefef;
+}
+header{
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+  max-width: 750px;
+  z-index: 100;
+  background: #7aa7ff;;
+  color:#fff;
+  position: relative;
+}
+header h5{
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+}
+header .lft{
+  position: absolute;
+  left: 12px;
+  top:0;
+}
+header .rt{
+  position: absolute;
+  right: 12px;
+  top:0;
+}
+.icon-back{
+  background: url(../images/back.png) no-repeat center center;
+  background-size: 13px auto;
+  width: 20px;
+  height: 28px;
+  margin-right: 5px;
+  margin-top: -2px;
+}
+
+.org{
+  color: #ffa726;
+}
+.cover{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 300;
+}
+.cover .alert{
+  position: absolute;
+  background-color: #fff;
+  padding: 10px 0;
+  top:50%;
+  left: 50%;
+  -webkit-transform:translate(-50%,-50%);
+  transform:translate(-50%,-50%);
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 300px;
+  width:90%;
+}
+.cover .alert .tt{
+  padding:5px 0;
+  font-size: 25px;
+  text-align: center;
+}
+.cover .alert .content{
+  padding: 10px 0;
+}
+.cover .alert .content .taocan{
+  padding: 0 20px;
+  font-size: 15px;
+}
+.cover .alert .content .taocan dd{
+  margin-bottom: 12px;
+}
+
+
+.but-box{
+  margin:18px 20px 0;
+}
+.btn-submit{
+  line-height: 44px;
+  background: #ffa726;
+  text-align: center;
+  padding: 0 15px;
+  min-width: 80px;
+  border-radius: 8px;
+  border: 0;
+  color:#fff;
+  font-size: 16px;
+}
+.but-box .btn-submit{
+  width:100%;
+}
+
+.block{
+  background-color: #fff;
+  padding: 10px 20px;
+  line-height: 40px;
+  font-size: 16px;
+}
+.mg{
+  margin-bottom: 10px;
+}
+.slt-box{
+  background-color: #fff;
+}
+.slt-box .tt{
+  padding: 5px 20px;
+  line-height: 30px;
+  border-bottom: 1px solid #eee;
+}
+.link{
+  display: inline-block;
+  padding-right: 12px;
+  background: url(../images/arr.png) no-repeat right center;
+  background-size: 8px auto;
+}
+.list-s{
+  display: table;
+  width: 100%;
+  padding-left: 15px;
+}
+.list-s li{
+  display: table-row;
+}
+.list-s li>div{
+  display: table-cell;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+.list-s li .label{
+  padding-right: 14px;
+  text-align: center;
+  box-sizing:content-box;
+  width: 46px;
+}
+.list-s li .label i{
+  width:100%;
+  background: #4ec252;
+  color:#fff;
+  display: inline-block;
+  line-height: 28px;
+  border-radius: 4px;
+}
+.list-s li .blk{
+  width: 50%;
+  float: left;
+  padding-right: 12px;
+}
+.btn-default{
+  border: 1px solid #bbb;
+  text-align: center;
+  width: 100%;
+  line-height: 38px;
+  border-radius: 8px;
+  white-space: nowrap;
+  position: relative;
+}
+@media (max-width: 320px){
+  .list-s li .blk{
+    padding-right: 10px;
+  }
+  .list-s li .blk .btn-default{
+    font-size: 12px;
+  }
+}
+.btn-default.selected{
+  border-color: #ff831f;
+  color: #ff831f;
+}
+.list-s li .blk .off:before{
+  background: url(../images/tip.png) no-repeat center center;
+  background-size: 100%;
+  width: 40px;
+  height: 18px;
+  content: " ";
+  position: absolute;
+  left: 10px;
+  top: -8px;
+}
+.list-s li del{
+  font-size: 12px;
+}
+ 
+.desc{
+  margin: 20px 15px;
+  line-height: 1.5;
+  font-size: 15px;
+}
+.desc dt{
+  margin-bottom: 3px;
+  font-size: 16px;
+}
+.desc dd{
+  color: #999;
+}
+.btn-num{
+  background: #f9a325;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  line-height: 20px;
+  vertical-align: baseline;
+  color: #fff;
+}
+
+.type-box{
+  line-height: 1.4;
+}
+.type-box .btn-default{
+  margin-right: 10px;
+  width:100px;
+  border-radius: 4px;
+}
+
+.list-s-special li .label{
+  width:90px;
+  text-align: right;
+  padding-right: 20px;
+}
+.list-s-special li .label i{
+  width:46px;
+  text-align: center;
+}

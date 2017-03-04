@@ -1,0 +1,1 @@
+document.getElementsByTagName("html")[0].style.fontSize=(Math.min(document.documentElement.getBoundingClientRect().width,750))/10+"px";
