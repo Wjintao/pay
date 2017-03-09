@@ -29,7 +29,7 @@ public class NotifyWxAction extends BaseJsonAction{
      * 该接口用于：微信回调我们接口
      * @param request
      * @param response
-     * @throws IOException 以下代码如有问题，请找产品经理，是他们的需求要这么写的，本人不负任何法律责任
+     * @throws IOException
      * @author wujt
      */
     public void notifyWxCallback() throws IOException {
@@ -57,63 +57,9 @@ public class NotifyWxAction extends BaseJsonAction{
         if (!isSucc) {
             logger.info("支付失败"); // 支付失败
         } else {
-            logger.info("===============付款成功==============");
-            // ------------------------------
-            // 处理业务开始
-            // ------------------------------
-            // 此处处理订单状态，结合自己的订单数据完成订单状态的更新
-
-            String outTradeNo = map.get("out_trade_no");
-            String openId = map.get("openid");
-            String trade_type = map.get("trade_type");
-            returnMessage = payOrderServiceImpl.updateWxPayOrder(outTradeNo);
-            if (returnMessage.getCode() == 0) {
-                returnMessage = payOrderServiceImpl.queryPayOrder(outTradeNo);
-                String objIdTc = ((TbTcdetail) returnMessage.getData()).getObjId();
-                Integer flow = ((TbTcdetail) returnMessage.getData()).getSortbyPrice();
-                String phone = returnMessage.getMessage();
-                if (returnMessage.getCode() == 0 
-                        && Arrays.asList(SysConstants.ARR_UFO_WX).contains(objIdTc)) {
-                    /*returnMessage =
-                            payOrderServiceImpl.isAccordFlow(outTradeNo, phone, objIdTc);
-                    if (returnMessage.getCode() == 0) {*/
-                        //========流量赠送代码========
-                        returnMessage = payOrderServiceImpl.flowGive(outTradeNo,openId,phone,flow.toString());
-                        if (returnMessage.getCode() == 0) {
-                            logger.info("===============流量赠送套餐购买的订单" + outTradeNo + "支付成功信息入库成功+付款成功+流量赠送成功"+returnMessage.getMessage()+"==============");
-                            String noticeStr = setXML("SUCCESS", "");
-                            logger.info(noticeStr);
-                            out.print(noticeStr);
-                        } else {
-                            logger.info("===============流量赠送套餐购买的订单" + outTradeNo + "支付成功信息入库成功+付款成功+流量赠送失败"+returnMessage.getMessage()+"==============");
-                            String noticeStr = setXML("SUCCESS", "");
-                            logger.info(noticeStr);
-                            out.print(noticeStr);
-                        }
-                    /*} else {
-                        logger.info("=======流量赠送套餐购买的订单，但是不符合每天首单赠送========" + outTradeNo + "支付成功信息入库成功+付款成功+流量不予赠送"+returnMessage.getMessage()+"==============");
-                        String noticeStr = setXML("SUCCESS", "");
-                        logger.info(noticeStr);
-                        out.print(noticeStr);
-                    }*/
-                } else {
-                    logger.info("===============" + outTradeNo + "支付成功信息入库成功+付款成功==============");
-                    String noticeStr = setXML("SUCCESS", "");
-                    logger.info(noticeStr);
-                    out.print(noticeStr);
-                }
-            } else {
-                logger.info("===============code:" + returnMessage.getCode() + "订单"
-                        + outTradeNo + "支付成功信息入库失败+付款成功==============");
-                String noticeStr = setXML("FAIL", "");
-                logger.info(noticeStr);
-                out.print(noticeStr);
-            }
-            // ------------------------------
-            // 处理业务完毕
-            // ------------------------------
-        }
+            //支付业务代码控制层代码
        // return "success";
+		}
     }
 
     public static String setXML(String return_code, String return_msg) {

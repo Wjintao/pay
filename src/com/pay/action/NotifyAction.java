@@ -26,6 +26,7 @@ public class NotifyAction extends BaseJsonAction{
      * @param request
      * @param response
      * @throws IOException
+	 * @author wujt
      */
     public void notifyCallback() throws IOException {
         PrintWriter out = this.getResponse().getWriter();
@@ -57,18 +58,7 @@ public class NotifyAction extends BaseJsonAction{
             // 处理业务开始
             // ------------------------------
             // 此处处理订单状态，结合自己的订单数据完成订单状态的更新 
-            
-            String outTradeNo=map.get("out_trade_no");
-            returnMessage=payOrderServiceImpl.updatePayOrder(outTradeNo);
-            if (returnMessage.getCode()==0) {
-                System.out.println("===============订单"+outTradeNo+"支付成功信息入库成功+付款成功==============");
-                String noticeStr = setXML("SUCCESS", "");
-                out.print(new ByteArrayInputStream(noticeStr.getBytes(Charset.forName("UTF-8"))));
-            }else{
-            	System.out.println("===============code:"+returnMessage.getCode()+"订单"+outTradeNo+"支付成功信息入库失败+付款成功==============");
-            	String noticeStr = setXML("FAIL", "");
-            	out.print(new ByteArrayInputStream(noticeStr.getBytes(Charset.forName("UTF-8"))));
-            }
+                      
             // ------------------------------
             // 处理业务完毕
             // ------------------------------
@@ -85,6 +75,7 @@ public class NotifyAction extends BaseJsonAction{
      * @param map
      * @param accessToken
      * @return
+	 * @author wujt
      */
     public static boolean reqOrderquery(Map<String, String> map) {
         WXOrderQuery orderQuery = new WXOrderQuery();
